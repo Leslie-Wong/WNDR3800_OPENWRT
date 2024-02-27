@@ -19,6 +19,12 @@ on:
         required: false
         default: 'false'
 
+permissions:
+  checks: write
+  contents: write
+  pages: write
+  id-token: write
+  
 env:
   REPO_URL: https://github.com/Lienol/openwrt
   REPO_BRANCH: 23.05

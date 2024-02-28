@@ -151,8 +151,8 @@ jobs:
       run: |
         mkdir upload_files
         cd $GITHUB_WORKSPACE/openwrt/bin
-        tar -zcvf ../../upload_files/packages${{ env.FILE_DATE }}.tar.gz packages
-        tar -zcvf ../../upload_files/targets${{ env.FILE_DATE }}.tar.gz targets
+        tar -zcvf $GITHUB_WORKSPACE/upload_files/packages${{ env.FILE_DATE }}.tar.gz packages
+        tar -zcvf $GITHUB_WORKSPACE/upload_files/targets${{ env.FILE_DATE }}.tar.gz targets
         cd $GITHUB_WORKSPACE/upload_files
         echo "UPLOADFILES=$PWD" >> $GITHUB_ENV
         

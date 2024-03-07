@@ -20,4 +20,4 @@ sed -i 's/config internal themes/config internal themes\n    option Argon  \"\/l
 rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 22.x $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
 
-cp -R $GITHUB_WORKSPACE/patchs/613-netfilter_optional_tcp_window_check.patch $GITHUB_WORKSPACE/openwrt/target/linux/generic/pending-5.4/613-netfilter_optional_tcp_window_check.patch
+cp -R $GITHUB_WORKSPACE/patchs/613-netfilter_optional_tcp_window_check.patch $GITHUB_WORKSPACE/openwrt/target/linux/generic/pending-5.15/613-netfilter_optional_tcp_window_check.patch

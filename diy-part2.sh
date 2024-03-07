@@ -11,7 +11,7 @@
 #
 
 # Modify default IP
-sed -i 's/192.168.1.1/192.168.3.1/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.3.1/g' $GITHUB_WORKSPACE/openwrt/package/base-files/files/bin/config_generate
 
 
 echo '修改默认主题'
@@ -19,3 +19,6 @@ sed -i 's/config internal themes/config internal themes\n    option Argon  \"\/l
 
 rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 22.x $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
+
+cd $GITHUB_WORKSPACE/openwrt
+git revert cbe73ea33d027dbb4b2cf1eca947ae746119e7d2

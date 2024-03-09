@@ -19,5 +19,17 @@ sed -i 's/CGO_ENABLED=0/CGO_ENABLED=1/g' $GITHUB_WORKSPACE/openwrt/packages/blob
 echo '修改默认主题'
 sed -i 's/config internal themes/config internal themes\n    option Argon  \"\/luci-static\/argon\"/g' $GITHUB_WORKSPACE/openwrt/feeds/luci/modules/luci-base/root/etc/config/luci
 
-rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 22.x $GITHUB_WORKSPACE/openwrt/feeds/packages/lang/golang
+echo 'Update Golang'
+cd $GITHUB_WORKSPACE/openwrt
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
+
+
+echo 'Update Mosdns package'
+cd $GITHUB_WORKSPACE/openwrt
+
+find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
+find ./ | grep Makefile | grep mosdns | xargs rm -f
+
+git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
+git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata

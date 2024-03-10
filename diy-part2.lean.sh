@@ -22,7 +22,7 @@ sed -i 's/config internal themes/config internal themes\n    option Argon  \"\/l
 echo 'Update Golang'
 cd $GITHUB_WORKSPACE/openwrt
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 20.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
 
 
 echo 'Update Mosdns package'

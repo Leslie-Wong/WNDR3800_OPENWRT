@@ -158,12 +158,12 @@ jobs:
         cd $GITHUB_WORKSPACE/upload_files
         echo "UPLOADFILES=$PWD" >> $GITHUB_ENV
         
-    - name: Upload firmware to fic
+    - name: Upload firmware to gof
       id: gof
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_gof == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer gof -p 16 --no-progress upload_files 2>&1  | tee gof.log
+        ./transfer gof --no-progress upload_files 2>&1  | tee gof.log
         echo "::warning file=1fichier.com::$(cat gof.log | grep https)"
         echo "url=$(cat gof.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
         
@@ -212,41 +212,40 @@ jobs:
         echo "::warning file=anonfile.com::$(cat gg.log | grep https)"
         echo "url=$(cat gg.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
 
-    - name: Read release body
-      id: read_release
-      shell: bash
+    - name: Generate release tag
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        r='<div>🎉🎉🎉🎉🎉🎉🎉🎉</div>'
-        if [ ${{env.UPLOAD_fic}} == 'true' ];then
-           r=$r'<p> 🌈 GoFile ⭐ <a target="_blank" href="${{ steps.gof.outputs.url }}" ><span class="px-1 text-bold">🔗</span></a> </p>'
-        fi
-        if [ ${{env.UPLOAD_WETRANSFER}} == 'true' ];then
-          r=$r'<p> 🌈 WeTransfer ⭐ <a target="_blank" href="${{ steps.wetransfer.outputs.url }}"><span class="px-1 text-bold">🔗</span></a></p>'
-        fi
-        if [ ${{env.UPLOAD_WSS}} == 'true' ];then
-          r=$r'<p> 🌈 Wenshushu ⭐ <a target="_blank" href="${{ steps.wss.outputs.url }}"><span class="px-1 text-bold">🔗</span></a></p>'
-        fi
-        if [ ${{env.UPLOAD_TRS}} == 'true' ];then
-          r=$r'<p> 🌈 Transfer ⭐ <a target="_blank" href="${{ steps.trs.outputs.url }}"><span class="px-1 text-bold">🔗</span></a></p>'
-        fi
-        if [ ${{env.UPLOAD_muse}} == 'true' ];then
-          r=$r'<p> 🌈 LitterBox ⭐ <a target="_blank" href="${{ steps.lit.outputs.url }}"><span class="px-1 text-bold">🔗</span></a></p>'
-        fi
-        if [ ${{env.UPLOAD_anon}} == 'true' ];then
-          r=$r'<p> 🌈 DownloadGG ⭐ <a target="_blank" href="${{ steps.gg.outputs.url }}"><span class="px-1 text-bold">🔗</span></a></p>'
-        fi
-        echo "RELEASE_BODY=$r" >> $GITHUB_OUTPUT
-    
-    - name: Upload Firmware to Github Release
-      uses: svenstaro/upload-release-action@v2
+        echo "release_tag=${{ github.workflow }}_${{ env.FILE_DATE }}" >> $GITHUB_OUTPUT
+        touch release.txt
+        [ $UPLOAD_gof = true ] && echo "🔗 [Cowtransfer](${{ steps.gof.outputs.url }})" >> release.txt
+        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        [ $UPLOAD_wss = true ] && echo "🔗 [WeTransfer](${{ steps.wss.outputs.url }})" >> release.txt
+        [ $UPLOAD_TRS = true ] && echo "🔗 [WeTransfer](${{ steps.trs.outputs.url }})" >> release.txt
+        [ $UPLOAD_lit = true ] && echo "🔗 [WeTransfer](${{ steps.lit.outputs.url }})" >> release.txt
+        [ $UPLOAD_gg  = true ] && echo "🔗 [WeTransfer](${{ steps.gg.outputs.url }})" >> release.txt
+        [ $wss = true ] && [ $UPLOAD_WETRANSFER = true ] && 
+        echo "------" >> release.txt
+        echo "🎉🎉🎉🎉🎉🎉🎉🎉" >> release.txt
+        echo "* This is WNRD 3800 firewarm!!! " >> release.txt
+        echo "由衷感谢所有为openwrt无私奉献的大佬们" >> release.txt
+        echo "* Lan ip is: \`$LANIP\`" >> release.txt
+        echo "* password is \`password\`" >> release.txt
+        echo "------" >> release.txt
+        useVersionInfo=$(git show -s --date=short --format="Author: %an<br/>date: %cd<br/>commit: %s<br/>commit hash: %H")
+        echo "$useVersionInfo" >> release.txt
+        echo "📥 固件下载" >> release.txt
+        echo "status=success" >> $GITHUB_OUTPUT
+        
+    - name: Upload firmware to release
+      uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        body: ${{ steps.read_release.outputs.RELEASE_BODY }}
-        file: ${{ env.FIRMWARE }}
-        file_glob: true
-        tag: ${{ steps.tag.outputs.release_tag }}
-        overwrite: true
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        files: ${{ env.FIRMWARE }}/*
+        body_path: release.txt
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main

@@ -164,7 +164,7 @@ jobs:
       run: |
         curl -fsSL git.io/file-transfer | sh
         ./transfer gof --no-progress upload_files 2>&1  | tee gof.log
-        echo "::warning file=1fichier.com::$(cat gof.log | grep https)"
+        echo "::warning file=GoFile::$(cat gof.log | grep https)"
         echo "url=$(cat gof.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
         
     - name: Upload firmware to WeTransfer
@@ -218,12 +218,12 @@ jobs:
       run: |
         echo "release_tag=${{ github.workflow }}_${{ env.FILE_DATE }}" >> $GITHUB_OUTPUT
         touch release.txt
-        [ $UPLOAD_gof = true ] && echo "🔗 [Cowtransfer](${{ steps.gof.outputs.url }})" >> release.txt
+        [ $UPLOAD_gof = true ] && echo "🔗 [GoFile](${{ steps.gof.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        [ $UPLOAD_wss = true ] && echo "🔗 [WeTransfer](${{ steps.wss.outputs.url }})" >> release.txt
-        [ $UPLOAD_TRS = true ] && echo "🔗 [WeTransfer](${{ steps.trs.outputs.url }})" >> release.txt
-        [ $UPLOAD_lit = true ] && echo "🔗 [WeTransfer](${{ steps.lit.outputs.url }})" >> release.txt
-        [ $UPLOAD_gg  = true ] && echo "🔗 [WeTransfer](${{ steps.gg.outputs.url }})" >> release.txt
+        [ $UPLOAD_wss = true ] && echo "🔗 [WenShuShu](${{ steps.wss.outputs.url }})" >> release.txt
+        [ $UPLOAD_TRS = true ] && echo "🔗 [Transfer.sh](${{ steps.trs.outputs.url }})" >> release.txt
+        [ $UPLOAD_lit = true ] && echo "🔗 [LitterBox](${{ steps.lit.outputs.url }})" >> release.txt
+        [ $UPLOAD_gg  = true ] && echo "🔗 [DownloadGG](${{ steps.gg.outputs.url }})" >> release.txt
         [ $wss = true ] && [ $UPLOAD_WETRANSFER = true ] && 
         echo "------" >> release.txt
         echo "🎉🎉🎉🎉🎉🎉🎉🎉" >> release.txt

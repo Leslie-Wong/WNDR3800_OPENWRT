@@ -165,7 +165,7 @@ jobs:
         curl -fsSL git.io/file-transfer | sh
         ./transfer gof --no-progress upload_files 2>&1  | tee gof.log
         echo "::warning file=GoFile::$(cat gof.log | grep https)"
-        echo "url=$(cat gof.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
+        #echo "url=$(cat gof.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
         
     - name: Upload firmware to WeTransfer
       id: wetransfer
@@ -174,7 +174,7 @@ jobs:
         curl -fsSL git.io/file-transfer | sh
         ./transfer wet -s -p 16 --no-progress upload_files 2>&1 | tee wetransfer.log
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
-        echo "url=$(cat wetransfer.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
+        #echo "url=$(cat wetransfer.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
     
     - name: Upload firmware to wenshushu
       id: wss
@@ -183,7 +183,7 @@ jobs:
         curl -fsSL git.io/file-transfer | sh
         ./transfer wss --block 2621440 -s -p 64 --no-progress upload_files 2>&1 | tee wss.log
         echo "::warning file=wenshushu.cn::$(cat wss.log | grep https)"
-        echo "url=$(cat wss.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
+        #echo "url=$(cat wss.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
        
     - name: Upload firmware to trs
       id: trs
@@ -192,7 +192,7 @@ jobs:
         curl -fsSL git.io/file-transfer | sh
         ./transfer trs --no-progress upload_files 2>&1 | tee trs.log
         echo "::warning file=transfer.sh::$(cat trs.log | grep https)"
-        echo "url=$(cat trs.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
+        #echo "url=$(cat trs.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
 
     - name: Upload firmware to muse
       id: lit
@@ -201,7 +201,7 @@ jobs:
         curl -fsSL git.io/file-transfer | sh
         ./transfer lit --no-progress upload_files 2>&1 | tee lit.log
         echo "::warning file=litterbox.catbox.moe::$(cat lit.log | grep https)"
-        echo "url=$(cat lit.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
+        #echo "url=$(cat lit.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
 
     - name: Upload firmware to anon
       id: gg
@@ -210,7 +210,7 @@ jobs:
         curl -fsSL git.io/file-transfer | sh
         ./transfer gg --no-progress upload_files 2>&1 | tee gg.log
         echo "::warning file=anonfile.com::$(cat gg.log | grep https)"
-        echo "url=$(cat gg.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
+        #echo "url=$(cat gg.log | grep https | cut -f3 -d" ")"  >> $GITHUB_OUTPUT
 
     - name: Generate release tag
       id: tag
@@ -218,13 +218,13 @@ jobs:
       run: |
         echo "release_tag=${{ github.workflow }}_${{ env.FILE_DATE }}" >> $GITHUB_OUTPUT
         touch release.txt
-        [ $UPLOAD_gof = true ] && echo "🔗 [GoFile](${{ steps.gof.outputs.url }})" >> release.txt
-        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        [ $UPLOAD_wss = true ] && echo "🔗 [WenShuShu](${{ steps.wss.outputs.url }})" >> release.txt
-        [ $UPLOAD_TRS = true ] && echo "🔗 [Transfer.sh](${{ steps.trs.outputs.url }})" >> release.txt
-        [ $UPLOAD_lit = true ] && echo "🔗 [LitterBox](${{ steps.lit.outputs.url }})" >> release.txt
-        [ $UPLOAD_gg  = true ] && echo "🔗 [DownloadGG](${{ steps.gg.outputs.url }})" >> release.txt
-        [ $wss = true ] && [ $UPLOAD_WETRANSFER = true ] && 
+        #[ $UPLOAD_gof = true ] && echo "🔗 [GoFile](${{ steps.gof.outputs.url }})" >> release.txt
+        #[ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        #[ $UPLOAD_wss = true ] && echo "🔗 [WenShuShu](${{ steps.wss.outputs.url }})" >> release.txt
+        #[ $UPLOAD_TRS = true ] && echo "🔗 [Transfer.sh](${{ steps.trs.outputs.url }})" >> release.txt
+        #[ $UPLOAD_lit = true ] && echo "🔗 [LitterBox](${{ steps.lit.outputs.url }})" >> release.txt
+        #[ $UPLOAD_gg  = true ] && echo "🔗 [DownloadGG](${{ steps.gg.outputs.url }})" >> release.txt
+        #[ $wss = true ] && [ $UPLOAD_WETRANSFER = true ] && 
         echo "------" >> release.txt
         echo "🎉🎉🎉🎉🎉🎉🎉🎉" >> release.txt
         echo "* This is WNRD 3800 firewarm!!! " >> release.txt

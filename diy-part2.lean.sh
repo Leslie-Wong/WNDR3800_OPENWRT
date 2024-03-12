@@ -39,5 +39,16 @@ git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 
 # 更新 chinadns-ng 版本
-#rm -rf $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
+rm -rf $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
 #svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/chinadns-ng/ $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
+cd $GITHUB_WORKSPACE/openwrt/feeds
+mkdir temp_chinadns-ng
+cd temp_chinadns-ng
+git init
+git config core.sparseCheckout true
+echo 'chinadns-ng' > .git/info/sparse-checkout
+git remote add -f origin https://github.com/xiaorouji/openwrt-passwall-packages.git
+git pull origin main
+vm chinadns-ng $GITHUB_WORKSPACE/openwrt/feeds/jell/
+cd ..
+rm -rf temp_chinadns-ng

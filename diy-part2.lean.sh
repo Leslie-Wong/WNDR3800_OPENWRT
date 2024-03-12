@@ -19,10 +19,14 @@ sed -i 's/CGO_ENABLED=0/CGO_ENABLED=1/g' $GITHUB_WORKSPACE/openwrt/packages/blob
 echo '修改默认主题'
 sed -i 's/config internal themes/config internal themes\n    option Argon  \"\/luci-static\/argon\"/g' $GITHUB_WORKSPACE/openwrt/feeds/luci/modules/luci-base/root/etc/config/luci
 
-echo 'Update Golang'
+# 移除 openwrt feeds 自带的核心包
+rm -rf $GITHUB_WORKSPACE/openwrt/feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
+rm -rf  $GITHUB_WORKSPACE/openwrt/feeds/jell/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
+
+# 更新 golang 1.22 版本
 cd $GITHUB_WORKSPACE/openwrt
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
 
 echo 'Update Mosdns package'

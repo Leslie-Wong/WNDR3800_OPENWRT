@@ -21,5 +21,5 @@ cd $GITHUB_WORKSPACE/openwrt/package
 git clone https://github.com/jerrykuku/luci-theme-argon.git
 
 
-sed -i 's/DEFAULT:@SECLEVEL=2/DEFAULT:@SECLEVEL=1/g' /etc/ssl/openssl.cnf
-sed -i 's/DEFAULT:@SECLEVEL=2/DEFAULT:@SECLEVEL=1/g' /usr/lib/ssl/openssl.cnf
+sudo sed -i 's/DEFAULT:@SECLEVEL=2/DEFAULT:@SECLEVEL=1/g' /etc/ssl/openssl.cnf
+sudo sed -i 's/DEFAULT:@SECLEVEL=2/DEFAULT:@SECLEVEL=1/g' /usr/lib/ssl/openssl.cnf

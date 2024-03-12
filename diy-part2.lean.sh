@@ -49,6 +49,6 @@ git config core.sparseCheckout true
 echo 'chinadns-ng' > .git/info/sparse-checkout
 git remote add -f origin https://github.com/xiaorouji/openwrt-passwall-packages.git
 git pull origin main
-vm chinadns-ng $GITHUB_WORKSPACE/openwrt/feeds/jell/
+mv chinadns-ng $GITHUB_WORKSPACE/openwrt/feeds/jell/
 cd ..
 rm -rf temp_chinadns-ng

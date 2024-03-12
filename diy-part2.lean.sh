@@ -37,3 +37,7 @@ find ./ | grep Makefile | grep mosdns | xargs rm -f
 
 git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
 git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+
+# 更新 chinadns-ng 版本
+rm -rf $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
+svn export https://github.com/immortalwrt/packages/trunk/net/chinadns-ng/ $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng

@@ -40,4 +40,4 @@ git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 
 # 更新 chinadns-ng 版本
 rm -rf $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
-svn export https://github.com/xiaorouji/openwrt-passwall-packages/trunk/chinadns-ng/ $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
+svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/chinadns-ng/ $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng

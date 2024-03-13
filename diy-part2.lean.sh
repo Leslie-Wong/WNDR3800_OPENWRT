@@ -32,11 +32,11 @@ git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/l
 echo 'Update Mosdns package'
 cd $GITHUB_WORKSPACE/openwrt
 
-find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
+#find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
 find ./ | grep Makefile | grep mosdns | xargs rm -f
 
 git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
-git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+# git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
 
 # 更新 chinadns-ng 版本
 rm -rf $GITHUB_WORKSPACE/openwrt/feeds/jell/chinadns-ng
